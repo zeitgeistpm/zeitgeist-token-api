@@ -5,7 +5,7 @@
     "title": "Zeitgeist token API",
     "description": "Provides network statistic information."
   },
-  "host": "https://zeitgeist-token-api.vercel.app/",
+  "host": "zeitgeist-token-api.vercel.app",
   "basePath": "/",
   "schemes": [
     "http",
