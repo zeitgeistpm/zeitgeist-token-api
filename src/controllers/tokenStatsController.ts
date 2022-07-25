@@ -22,7 +22,9 @@ export class TokenStatsController extends ControllerBase implements IControllerB
          * @description Test route
          */
         app.route('/api/v1/token/stats').get(async (req: Request, res: Response) => {
-            // #swagger.ignore = true
+            /*
+                #swagger.description = 'Get current token stats'
+            */
             try {
                 res.json(await this._statsService.getTokenStats());
             } catch (err) {
@@ -34,6 +36,9 @@ export class TokenStatsController extends ControllerBase implements IControllerB
          * @description Token current price route v1.
          */
         app.route('/api/v1/token/price').get(async (req: Request, res: Response) => {
+            /*
+                #swagger.description = 'Get current token price'
+            */
             try {
                 res.json(await this._priceProvider.getUsdPrice());
             } catch (err) {
@@ -45,6 +50,9 @@ export class TokenStatsController extends ControllerBase implements IControllerB
          * @description Token circulation route v1.
          */
         app.route('/api/v1/token/circulation').get(async (req: Request, res: Response) => {
+            /*
+                #swagger.description = 'Get current token circulation'
+            */
             try {
                 res.json(await (await this._statsService.getTokenStats()).circulatingSupply);
             } catch (err) {
@@ -56,6 +64,9 @@ export class TokenStatsController extends ControllerBase implements IControllerB
          * @description Token price route v1.
          */
         app.route('/api/v1/token/price/:period').get(async (req: Request, res: Response) => {
+            /*
+                #swagger.description = 'Get token price in a specific period'
+            */
             res.json(await this._indexerService.getPrice(req.params.period as PeriodType));
         });
 
@@ -63,6 +74,9 @@ export class TokenStatsController extends ControllerBase implements IControllerB
          * @description Token Holders.
          */
         app.route('/api/v1/token/holders').get(async (req: Request, res: Response) => {
+            /*
+                #swagger.description = 'Get the number of current token holders'
+            */
             res.json(await this._indexerService.getHolders());
         });
     }

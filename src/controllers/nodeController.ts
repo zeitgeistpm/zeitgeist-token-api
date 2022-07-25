@@ -13,10 +13,21 @@ export class NodeController implements IControllerBase {
          * @description Transactions route v1.
          */
         app.route('/api/v1/node/tx-perblock/total').get(async (req: Request, res: Response) => {
+            /*
+                #swagger.description = 'Query the numbers of total tx'
+            */
             res.json(await this._indexerService.getTotalTransfers());
         });
 
         app.route('/api/v1/node/tx-perblock/:period').get(async (req: Request, res: Response) => {
+            /*
+                #swagger.description = 'Query the numbers of tx in a specific period'
+                #swagger.parameters['period'] = {
+                    in: 'path',
+                    description: 'The period type.  Supported values: 7 days 30 days, 90 days, 1 year',
+                    required: true,
+                }
+            */
             res.json(await this._indexerService.getValidTransactions(req.params.period as PeriodType));
         });
 

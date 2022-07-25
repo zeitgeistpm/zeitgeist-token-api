@@ -4,9 +4,9 @@ import { PalletBalancesAccountData } from '@polkadot/types/lookup';
 import { IZeitgeistApi } from '../../src/client/baseApi';
 
 /**
- * Astar Polkadot API mock.
+ * Zeitgeist Polkadot API mock.
  */
-export class AstarApiMock implements IZeitgeistApi {
+export class ZeitgeistApiMock implements IZeitgeistApi {
     public async getTotalSupply(): Promise<u128> {
         return new u128(new TypeRegistry(), '100000000000000000000');
     }
@@ -38,6 +38,6 @@ export class AstarApiMock implements IZeitgeistApi {
     }
 
     public async getChainName(): Promise<string> {
-        return Promise.resolve('development');
+        return Promise.resolve('zeitgeist');
     }
 }

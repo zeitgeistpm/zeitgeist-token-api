@@ -12,9 +12,20 @@
     "https"
   ],
   "paths": {
+    "/api/v1/token/stats": {
+      "get": {
+        "description": "Get current token stats",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/v1/token/price": {
       "get": {
-        "description": "",
+        "description": "Get current token price",
         "parameters": [],
         "responses": {
           "200": {
@@ -25,7 +36,7 @@
     },
     "/api/v1/token/circulation": {
       "get": {
-        "description": "",
+        "description": "Get current token circulation",
         "parameters": [],
         "responses": {
           "200": {
@@ -36,7 +47,7 @@
     },
     "/api/v1/token/price/{period}": {
       "get": {
-        "description": "",
+        "description": "Get token price in a specific period",
         "parameters": [
           {
             "name": "period",
@@ -54,7 +65,7 @@
     },
     "/api/v1/token/holders": {
       "get": {
-        "description": "",
+        "description": "Get the number of current token holders",
         "parameters": [],
         "responses": {
           "200": {
@@ -65,7 +76,7 @@
     },
     "/api/v1/node/tx-perblock/total": {
       "get": {
-        "description": "",
+        "description": "Query the numbers of total tx",
         "parameters": [],
         "responses": {
           "200": {
@@ -76,13 +87,14 @@
     },
     "/api/v1/node/tx-perblock/{period}": {
       "get": {
-        "description": "",
+        "description": "Query the numbers of tx in a specific period",
         "parameters": [
           {
             "name": "period",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The period type. Supported values: 7 days 30 days, 90 days, 1 year"
           }
         ],
         "responses": {
