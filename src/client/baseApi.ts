@@ -17,7 +17,7 @@ export interface IZeitgeistApi {
 export class BaseApi implements IZeitgeistApi {
     protected _api: ApiPromise;
 
-    constructor(private endpoint = networks.zeitgeist.endpoint) {}
+    constructor(private endpoints = networks.zeitgeist.endpoints) {}
 
     public async getTotalSupply(): Promise<u128> {
         await this.connect();
@@ -45,14 +45,40 @@ export class BaseApi implements IZeitgeistApi {
         return (await this._api.rpc.system.chain()).toString();
     }
 
-    protected async connect() {
-        // establish node connection with the endpoint
-        if (!this._api) {
-            const provider = new WsProvider(this.endpoint);
-            const api = new ApiPromise({ provider });
-            this._api = await api.isReady;
+    protected async connect(index?: number): Promise<ApiPromise> {
+        // establish node connection with the endpoints
+        // support multi endpoints
+
+        let apiNow: ApiPromise;
+        const currentIndex = index ?? 0;
+
+        if (!this._api || index) {
+            const provider = new WsProvider(this.endpoints[currentIndex]);
+            apiNow = new ApiPromise({ provider });
+        } else {
+            apiNow = this._api;
         }
 
-        return this._api;
+        return await apiNow.isReadyOrError.then(
+            (api: ApiPromise) => {
+                // succeed
+                this._api = api;
+                return api;
+            },
+            async () => {
+                // fail
+                apiNow.disconnect();
+                const nextNetworkIndex = this.getNexttNetwork(currentIndex);
+                console.warn(
+                    `Connection to ${this.endpoints[currentIndex]} failed. Try ${this.endpoints[nextNetworkIndex]}`,
+                );
+
+                return await this.connect(nextNetworkIndex);
+            },
+        );
+    }
+
+    private getNexttNetwork(index: number): number {
+        return (index + 1) % this.endpoints.length;
     }
 }

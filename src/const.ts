@@ -17,7 +17,11 @@ export const networks = {
         // 1. wss://rpc-0.zeitgeist.pm
         // 2. wss://zeitgeist-rpc.dwellir.com
         // 3. wss://zeitgeist.api.onfinality.io/public-ws
-        endpoint: 'wss://zeitgeist-rpc.dwellir.com',
+        endpoints: [
+            'wss://rpc-0.zeitgeist.pm',
+            'wss://zeitgeist-rpc.dwellir.com',
+            'wss://zeitgeist.api.onfinality.io/public-ws',
+        ],
         subscanUrl: 'https://zeitgeist.api.subscan.io',
     },
 };

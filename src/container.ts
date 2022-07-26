@@ -21,7 +21,7 @@ const container = new Container();
 // data access
 container
     .bind<IZeitgeistApi>(ContainerTypes.Api)
-    .toConstantValue(new ZeitgeistApi(networks.zeitgeist.endpoint))
+    .toConstantValue(new ZeitgeistApi(networks.zeitgeist.endpoints))
     .whenTargetNamed(networks.zeitgeist.name);
 container.bind<IApiFactory>(ContainerTypes.ApiFactory).to(ApiFactory).inSingletonScope();
 
