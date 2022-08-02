@@ -1,0 +1,119 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Zeitgeist token API",
+        "description": "Provides network statistic information."
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "paths": {
+        "/api/v1/token/stats": {
+            "get": {
+                "description": "Get current token stats",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/v1/token/price": {
+            "get": {
+                "description": "Get current token price",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/v1/token/circulation": {
+            "get": {
+                "description": "Get current token circulation",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/v1/token/price/{period}": {
+            "get": {
+                "description": "Get token price in a specific period",
+                "parameters": [
+                    {
+                        "name": "period",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/v1/token/holders": {
+            "get": {
+                "description": "Get the number of current token holders",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/v1/node/tx-perblock/total": {
+            "get": {
+                "description": "Query the numbers of total tx",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/v1/node/tx-perblock/{period}": {
+            "get": {
+                "description": "Query the numbers of tx in a specific period",
+                "parameters": [
+                    {
+                        "name": "period",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "The period type. Supported values: 7 days 30 days, 90 days, 1 year"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/v1/node/get-decimal": {
+            "get": {
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    }
+}
