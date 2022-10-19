@@ -15,6 +15,8 @@ import { ZeitgeistApi } from './client/zeitgeistAPI';
 import { ContainerTypes } from './containertypes';
 import { IPriceProvider } from './services/iPriceProvider';
 import { CoinGeckoPriceProvider, PriceProviderWithFailover } from './services/priceProvider';
+import { IMarketIndexerService, MarketIndexerService } from './services/marketIndexer';
+import { MarketController } from './controllers/marketController';
 
 const container = new Container();
 
@@ -28,6 +30,7 @@ container.bind<IApiFactory>(ContainerTypes.ApiFactory).to(ApiFactory).inSingleto
 // services registration
 container.bind<IStatsService>(ContainerTypes.StatsService).to(StatsService).inSingletonScope();
 container.bind<IStatsIndexerService>(ContainerTypes.StatsIndexerService).to(StatsIndexerService).inSingletonScope();
+container.bind<IMarketIndexerService>(ContainerTypes.MarketIndexerService).to(MarketIndexerService).inSingletonScope();
 container.bind<IPriceProvider>(ContainerTypes.PriceProvider).to(CoinGeckoPriceProvider).inSingletonScope();
 container
     .bind<IPriceProvider>(ContainerTypes.PriceProviderWithFailover)
@@ -37,5 +40,6 @@ container
 // controllers registration
 container.bind<IControllerBase>(ContainerTypes.Controller).to(TokenStatsController);
 container.bind<IControllerBase>(ContainerTypes.Controller).to(NodeController);
+container.bind<IControllerBase>(ContainerTypes.Controller).to(MarketController);
 
 export default container;
