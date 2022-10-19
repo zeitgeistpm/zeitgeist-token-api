@@ -2,7 +2,7 @@ import axios from 'axios';
 import { inject, injectable } from 'inversify';
 import { IApiFactory } from '../client/apiFactory';
 import { ContainerTypes } from '../containertypes';
-import SDK from '@zeitgeistpm/sdk/dist';
+import SDK from '@zeitgeistpm/sdk';
 import { networks } from '../const';
 
 export interface IMarketIndexerService {
