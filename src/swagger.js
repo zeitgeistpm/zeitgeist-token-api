@@ -4,6 +4,7 @@ const outputFile = 'src/swagger_output.json';
 const endpointsFiles = [
     'src/controllers/tokenStatsController.ts',
     'src/controllers/nodeController.ts',
+    'src/controllers/marketController.ts',
 ];
 
 const getDocumentation = (host) => ({

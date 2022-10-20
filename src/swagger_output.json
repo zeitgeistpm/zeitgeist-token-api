@@ -114,6 +114,17 @@
           }
         }
       }
+    },
+    "/api/v1/market/count": {
+      "get": {
+        "description": "Query the numbers of total markets",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   }
 }
