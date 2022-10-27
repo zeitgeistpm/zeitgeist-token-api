@@ -6,6 +6,7 @@ export const ContainerTypes = {
     DappsStakingService: 'DappsStakingService',
     StatsIndexerService: 'StatsIndexerService',
     MarketIndexerService: 'MarketIndexerService',
+    DevIndexerService: 'DevIndexerService',
     PriceProvider: 'PriceProvider',
     PriceProviderWithFailover: 'PriceProviderWithFailover',
 };

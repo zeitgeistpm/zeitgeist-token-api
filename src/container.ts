@@ -17,6 +17,8 @@ import { IPriceProvider } from './services/iPriceProvider';
 import { CoinGeckoPriceProvider, PriceProviderWithFailover } from './services/priceProvider';
 import { IMarketIndexerService, MarketIndexerService } from './services/marketIndexer';
 import { MarketController } from './controllers/marketController';
+import { DevIndexerService, IDevIndexerService } from './services/devIndexer';
+import { DevController } from './controllers/devController';
 
 const container = new Container();
 
@@ -31,6 +33,7 @@ container.bind<IApiFactory>(ContainerTypes.ApiFactory).to(ApiFactory).inSingleto
 container.bind<IStatsService>(ContainerTypes.StatsService).to(StatsService).inSingletonScope();
 container.bind<IStatsIndexerService>(ContainerTypes.StatsIndexerService).to(StatsIndexerService).inSingletonScope();
 container.bind<IMarketIndexerService>(ContainerTypes.MarketIndexerService).to(MarketIndexerService).inSingletonScope();
+container.bind<IDevIndexerService>(ContainerTypes.DevIndexerService).to(DevIndexerService).inSingletonScope();
 container.bind<IPriceProvider>(ContainerTypes.PriceProvider).to(CoinGeckoPriceProvider).inSingletonScope();
 container
     .bind<IPriceProvider>(ContainerTypes.PriceProviderWithFailover)
@@ -41,5 +44,6 @@ container
 container.bind<IControllerBase>(ContainerTypes.Controller).to(TokenStatsController);
 container.bind<IControllerBase>(ContainerTypes.Controller).to(NodeController);
 container.bind<IControllerBase>(ContainerTypes.Controller).to(MarketController);
+container.bind<IControllerBase>(ContainerTypes.Controller).to(DevController);
 
 export default container;
