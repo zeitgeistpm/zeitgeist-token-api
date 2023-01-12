@@ -15,6 +15,7 @@ export class MarketController implements IControllerBase {
         app.route('/api/v1/market/count').get(async (req: Request, res: Response) => {
             /*
                 #swagger.description = 'Query the numbers of total markets'
+                #swagger.tags = ['APP']
             */
             res.json(await this._indexerService.getMarketCount());
         });

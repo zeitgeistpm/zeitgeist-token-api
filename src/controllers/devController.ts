@@ -15,6 +15,7 @@ export class DevController implements IControllerBase {
         app.route('/api/v1/dev/npm-downloads/:name/:period').get(async (req: Request, res: Response) => {
             /*
                 #swagger.description = 'Query the numbers of total markets'
+                #swagger.tags = ['Dev']
             */
             res.json(
                 await this._indexerService.getNpmDownloads(req.params.name as string, req.params.period as PeriodType),
@@ -27,6 +28,7 @@ export class DevController implements IControllerBase {
         app.route('/api/v1/dev/github-metrics/:organization/:name').get(async (req: Request, res: Response) => {
             /*
                 #swagger.description = 'Query the numbers of total markets'
+                #swagger.tags = ['Dev']
             */
             res.json(
                 await this._indexerService.getGithubStats(req.params.organization as string, req.params.name as string),
