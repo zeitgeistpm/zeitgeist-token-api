@@ -15,6 +15,7 @@ export class NodeController implements IControllerBase {
         app.route('/api/v1/node/tx-perblock/total').get(async (req: Request, res: Response) => {
             /*
                 #swagger.description = 'Query the numbers of total tx'
+                #swagger.tags = ['Node']
             */
             res.json(await this._indexerService.getTotalTransfers());
         });
@@ -22,6 +23,7 @@ export class NodeController implements IControllerBase {
         app.route('/api/v1/node/tx-perblock/:period').get(async (req: Request, res: Response) => {
             /*
                 #swagger.description = 'Query the numbers of tx in a specific period'
+                #swagger.tags = ['Node']
                 #swagger.parameters['period'] = {
                     in: 'path',
                     description: 'The period type.  Supported values: 7 days 30 days, 90 days, 1 year',
@@ -32,6 +34,10 @@ export class NodeController implements IControllerBase {
         });
 
         app.route('/api/v1/node/get-decimal').get(async (req: Request, res: Response) => {
+            /*
+                #swagger.description = 'Query the decimal of the blockchain'
+                #swagger.tags = ['Node']
+            */
             res.json(await this._indexerService.getDecimal());
         });
     }

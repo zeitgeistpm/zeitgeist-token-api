@@ -5,6 +5,7 @@
     "target": "es2017",
     "lib": ["esnext", "DOM", "DOM.Iterable"],
     "moduleResolution": "node",
+    "skipLibCheck": true,
     "sourceMap": true,
     "outDir": "build",
     "strict": true,
