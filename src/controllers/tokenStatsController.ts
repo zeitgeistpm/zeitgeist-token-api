@@ -24,6 +24,7 @@ export class TokenStatsController extends ControllerBase implements IControllerB
         app.route('/api/v1/token/stats').get(async (req: Request, res: Response) => {
             /*
                 #swagger.description = 'Get current token stats'
+                #swagger.tags = ['Token']
             */
             try {
                 res.json(await this._statsService.getTokenStats());
@@ -38,6 +39,7 @@ export class TokenStatsController extends ControllerBase implements IControllerB
         app.route('/api/v1/token/price').get(async (req: Request, res: Response) => {
             /*
                 #swagger.description = 'Get current token price'
+                #swagger.tags = ['Token']
             */
             try {
                 res.json(await this._priceProvider.getUsdPrice());
@@ -52,9 +54,10 @@ export class TokenStatsController extends ControllerBase implements IControllerB
         app.route('/api/v1/token/circulation').get(async (req: Request, res: Response) => {
             /*
                 #swagger.description = 'Get current token circulation'
+                #swagger.tags = ['Token']
             */
             try {
-                res.json(await (await this._statsService.getTokenStats()).circulatingSupply);
+                res.json(await (await this._statsService.getTokenStats()).circulation_balance);
             } catch (err) {
                 this.handleError(res, err as Error);
             }
@@ -66,6 +69,7 @@ export class TokenStatsController extends ControllerBase implements IControllerB
         app.route('/api/v1/token/price/:period').get(async (req: Request, res: Response) => {
             /*
                 #swagger.description = 'Get token price in a specific period'
+                #swagger.tags = ['Token']
             */
             res.json(await this._indexerService.getPrice(req.params.period as PeriodType));
         });
@@ -76,6 +80,7 @@ export class TokenStatsController extends ControllerBase implements IControllerB
         app.route('/api/v1/token/holders').get(async (req: Request, res: Response) => {
             /*
                 #swagger.description = 'Get the number of current token holders'
+                #swagger.tags = ['Token']
             */
             res.json(await this._indexerService.getHolders());
         });

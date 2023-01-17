@@ -27,3 +27,5 @@ app.use('/', swagger.serve, swagger.setup(swaggerFile));
 app.listen(listenPort, () => {
     console.log('Server is listening on port ', listenPort);
 });
+
+module.exports = app;

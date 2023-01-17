@@ -5,6 +5,8 @@ export const ContainerTypes = {
     ApiFactory: 'ApiFactory',
     DappsStakingService: 'DappsStakingService',
     StatsIndexerService: 'StatsIndexerService',
+    MarketIndexerService: 'MarketIndexerService',
+    DevIndexerService: 'DevIndexerService',
     PriceProvider: 'PriceProvider',
     PriceProviderWithFailover: 'PriceProviderWithFailover',
 };

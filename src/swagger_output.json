@@ -8,12 +8,15 @@
   "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
-    "http",
-    "https"
+    "https",
+    "http"
   ],
   "paths": {
     "/api/v1/token/stats": {
       "get": {
+        "tags": [
+          "Token"
+        ],
         "description": "Get current token stats",
         "parameters": [],
         "responses": {
@@ -25,6 +28,9 @@
     },
     "/api/v1/token/price": {
       "get": {
+        "tags": [
+          "Token"
+        ],
         "description": "Get current token price",
         "parameters": [],
         "responses": {
@@ -36,6 +42,9 @@
     },
     "/api/v1/token/circulation": {
       "get": {
+        "tags": [
+          "Token"
+        ],
         "description": "Get current token circulation",
         "parameters": [],
         "responses": {
@@ -47,6 +56,9 @@
     },
     "/api/v1/token/price/{period}": {
       "get": {
+        "tags": [
+          "Token"
+        ],
         "description": "Get token price in a specific period",
         "parameters": [
           {
@@ -65,6 +77,9 @@
     },
     "/api/v1/token/holders": {
       "get": {
+        "tags": [
+          "Token"
+        ],
         "description": "Get the number of current token holders",
         "parameters": [],
         "responses": {
@@ -76,6 +91,9 @@
     },
     "/api/v1/node/tx-perblock/total": {
       "get": {
+        "tags": [
+          "Node"
+        ],
         "description": "Query the numbers of total tx",
         "parameters": [],
         "responses": {
@@ -87,6 +105,9 @@
     },
     "/api/v1/node/tx-perblock/{period}": {
       "get": {
+        "tags": [
+          "Node"
+        ],
         "description": "Query the numbers of tx in a specific period",
         "parameters": [
           {
@@ -104,10 +125,157 @@
         }
       }
     },
-    "/api/v1/node/get-decimal": {
+    "/api/v1/node/addressLists/{start}/{end}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Node"
+        ],
+        "description": "Query the numbers of tx in a specific period",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/node/txLists/{start}/{end}": {
+      "get": {
+        "tags": [
+          "Node"
+        ],
+        "description": "Query the numbers of tx in a specific period",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/app/marketCount": {
+      "get": {
+        "tags": [
+          "APP"
+        ],
+        "description": "Query the numbers of total markets",
         "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/app/activeMarketCount": {
+      "get": {
+        "tags": [
+          "APP"
+        ],
+        "description": "Query the numbers of active markets",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/app/getTagLists/{active}": {
+      "get": {
+        "tags": [
+          "APP"
+        ],
+        "description": "Query the tag numbers of (active) markets",
+        "parameters": [
+          {
+            "name": "active",
+            "in": "path",
+            "required": true,
+            "type": "boolean",
+            "description": "The boolean type. true or false"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/dev/npm-downloads/{name}/{period}": {
+      "get": {
+        "tags": [
+          "Dev"
+        ],
+        "description": "Query the numbers of total markets",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "period",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/dev/github-metrics/{organization}/{name}": {
+      "get": {
+        "tags": [
+          "Dev"
+        ],
+        "description": "Query the numbers of total markets",
+        "parameters": [
+          {
+            "name": "organization",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"

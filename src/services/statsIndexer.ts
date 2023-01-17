@@ -3,7 +3,8 @@ import { inject, injectable } from 'inversify';
 import { IApiFactory } from '../client/apiFactory';
 import { ContainerTypes } from '../containertypes';
 import { networks } from '../const';
-import { getDateYyyyMmDd, getSubscanOption } from '../utils';
+import { getDateYyyyMmDd, getDiffs, getSubscanOption } from '../utils';
+import { TransactionsWithoutLabel, tx, user, UsersWithDiffs } from '../models/tokenStats';
 
 export type PeriodType = '7 days' | '30 days' | '90 days' | '1 year';
 export type Pair = { date: number; value: number };
@@ -12,7 +13,11 @@ export type DateRange = { start: Date; end: Date };
 export interface IStatsIndexerService {
     getValidTransactions(period: PeriodType): Promise<Pair[]>;
 
-    getTotalTransfers(): Promise<number>;
+    fetchAddressLists(start: string, end: string): Promise<UsersWithDiffs>;
+
+    fetchTxLists(start: string, end: string): Promise<TransactionsWithoutLabel>;
+
+    getTransactionCount(): Promise<number>;
 
     getPrice(period: PeriodType): Promise<Pair[]>;
 
@@ -58,7 +63,128 @@ export class StatsIndexerService implements IStatsIndexerService {
         }
     }
 
-    public async getTotalTransfers(): Promise<number> {
+    public async fetchAddressLists(start: string, end: string): Promise<UsersWithDiffs> {
+        // Docs: https://support.subscan.io/#daily
+        const url = networks.zeitgeist.subscanUrl + '/api/scan/daily';
+        const option = getSubscanOption();
+        const user = new Array<user>();
+
+        try {
+            const active = await axios
+                .post(
+                    url,
+                    {
+                        start: start,
+                        end: end,
+                        format: 'day',
+                        category: 'ActiveAccount',
+                    },
+                    option,
+                )
+                .then((response: any) => {
+                    response.data.data.list.forEach((value: any) => {
+                        user.push({
+                            day: value.time_utc.slice(0, 10),
+                            active: value.total,
+                            users: 0,
+                            total: 0,
+                        });
+                    });
+                    return user;
+                });
+
+            const newAccount = await axios
+                .post(
+                    url,
+                    {
+                        start: start,
+                        end: end,
+                        format: 'day',
+                        category: 'NewAccount',
+                    },
+                    option,
+                )
+                .then((response: any) => {
+                    response.data.data.list.forEach((value: any, index: number) => {
+                        active[index].users = value.total;
+                        if (index == 0) {
+                            active[index].total = value.total;
+                        } else {
+                            active[index].total = active[index - 1].total + value.total;
+                        }
+                    });
+                    return active;
+                })
+                .then(function (data: user[]) {
+                    const res: UsersWithDiffs = { total: 0 } as UsersWithDiffs;
+
+                    res.diffs = getDiffs(data);
+                    res.users = data;
+                    res.total = data[data.length - 1].total!;
+                    return res;
+                })
+                .then((res) => {
+                    return res;
+                });
+            return newAccount;
+        } catch (e) {
+            console.error(e);
+            return {} as UsersWithDiffs;
+        }
+    }
+
+    public async fetchTxLists(start: string, end: string): Promise<TransactionsWithoutLabel> {
+        // Docs: https://support.subscan.io/#daily
+        const url = networks.zeitgeist.subscanUrl + '/api/scan/daily';
+        const option = getSubscanOption();
+        const transactions = new Array<tx>();
+
+        try {
+            return await axios
+                .post(
+                    url,
+                    {
+                        start: start,
+                        end: end,
+                        format: 'day',
+                        category: 'transfer',
+                    },
+                    option,
+                )
+                .then((response: any) => {
+                    response.data.data.list.forEach((value: any, index: number) => {
+                        const totalTxsCount =
+                            index == 0 ? value.total : transactions[index - 1].totalTxsCount + value.total;
+                        const totalTxsAmount =
+                            index == 0
+                                ? Number(value.transfer_amount_total)
+                                : transactions[index - 1].totalTxsAmount! + Number(value.transfer_amount_total);
+
+                        transactions.push({
+                            txCount: value.total,
+                            day: value.time_utc.slice(0, 10),
+                            amount: Number(value.transfer_amount_total),
+                            totalTxsCount: totalTxsCount,
+                            totalTxsAmount: totalTxsAmount,
+                        });
+                    });
+                    return transactions;
+                })
+                .then((data: tx[]) => {
+                    const res: TransactionsWithoutLabel = {} as TransactionsWithoutLabel;
+
+                    res.totalTxsAmount = data[data.length - 1].totalTxsAmount!;
+                    res.txs = data;
+                    res.totalTxsCount = data[data.length - 1].totalTxsCount!;
+                    return res;
+                });
+        } catch (e) {
+            console.error(e);
+            return {} as TransactionsWithoutLabel;
+        }
+    }
+
+    public async getTransactionCount(): Promise<number> {
         // Docs: https://support.subscan.io/#transfers
         const url = networks.zeitgeist.subscanUrl + '/api/scan/transfers';
         const option = getSubscanOption();
