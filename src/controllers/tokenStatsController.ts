@@ -57,7 +57,7 @@ export class TokenStatsController extends ControllerBase implements IControllerB
                 #swagger.tags = ['Token']
             */
             try {
-                res.json(await (await this._statsService.getTokenStats()).circulatingSupply);
+                res.json(await (await this._statsService.getTokenStats()).circulation_balance);
             } catch (err) {
                 this.handleError(res, err as Error);
             }

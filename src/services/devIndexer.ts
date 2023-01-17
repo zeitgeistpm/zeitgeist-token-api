@@ -2,13 +2,13 @@ import axios from 'axios';
 import { inject, injectable } from 'inversify';
 import { IApiFactory } from '../client/apiFactory';
 import { ContainerTypes } from '../containertypes';
-import { github_repo } from '../types/devStats';
+import { GithubRepo } from '../models/devStats';
 
 export type PeriodType = 'last-day' | 'last-week' | 'last-month';
 
 export interface IDevIndexerService {
     getNpmDownloads(name: string, period: PeriodType): Promise<number>;
-    getGithubStats(organization: string, name: string): Promise<github_repo>;
+    getGithubStats(organization: string, name: string): Promise<GithubRepo>;
 }
 
 @injectable()
@@ -28,18 +28,25 @@ export class DevIndexerService implements IDevIndexerService {
         }
     }
 
-    public async getGithubStats(organization: string, name: string): Promise<github_repo> {
+    public async getGithubStats(organization: string, name: string): Promise<GithubRepo> {
         try {
             const result = await axios.get(`https://api.github.com/repos/${organization}/${name}`);
-            const res: github_repo = {
+            const res: GithubRepo = {
+                id: result.data.id,
                 name: result.data.name,
-                star: result.data.watchers_count,
-                fork: result.data.forks_count,
+                fullName: result.data.full_name,
+                description: result.data.description,
+                url: result.data.url,
+                homepage: result.data.homepage,
+                openIssuesCount: result.data.open_issues,
+                starsCount: result.data.stargazers_count,
+                forksCount: result.data.forks_count,
+                subscribersCount: result.data.subscribers_count,
             };
             return res;
         } catch (e) {
             console.error(e);
-            return {};
+            return {} as GithubRepo;
         }
     }
 }

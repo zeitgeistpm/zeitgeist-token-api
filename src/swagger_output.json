@@ -125,12 +125,66 @@
         }
       }
     },
-    "/api/v1/node/get-decimal": {
+    "/api/v1/node/addressLists/{start}/{end}": {
       "get": {
         "tags": [
           "Node"
         ],
-        "description": "Query the decimal of the blockchain",
+        "description": "Query the numbers of tx in a specific period",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/node/txLists/{start}/{end}": {
+      "get": {
+        "tags": [
+          "Node"
+        ],
+        "description": "Query the numbers of tx in a specific period",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/app/marketCount": {
+      "get": {
+        "tags": [
+          "APP"
+        ],
+        "description": "Query the numbers of total markets",
         "parameters": [],
         "responses": {
           "200": {
@@ -139,13 +193,35 @@
         }
       }
     },
-    "/api/v1/market/count": {
+    "/api/v1/app/activeMarketCount": {
       "get": {
         "tags": [
           "APP"
         ],
-        "description": "Query the numbers of total markets",
+        "description": "Query the numbers of active markets",
         "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/app/getTagLists/{active}": {
+      "get": {
+        "tags": [
+          "APP"
+        ],
+        "description": "Query the tag numbers of (active) markets",
+        "parameters": [
+          {
+            "name": "active",
+            "in": "path",
+            "required": true,
+            "type": "boolean",
+            "description": "The boolean type. true or false"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"

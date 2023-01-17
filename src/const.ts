@@ -23,6 +23,6 @@ export const networks = {
             'wss://rpc-0.zeitgeist.pm',
         ],
         subscanUrl: 'https://zeitgeist.api.subscan.io',
-        rpcUrl: 'wss://zeitgeist-rpc.dwellir.com',
+        graphqlUrl: 'https://processor.zeitgeist.pm/graphql',
     },
 };

@@ -1,10 +1,11 @@
 const swaggerAutogen = require('swagger-autogen')();
+// import swaggerAutogen from 'swagger-autogen';
 
 const outputFile = 'src/swagger_output.json';
 const endpointsFiles = [
     'src/controllers/tokenStatsController.ts',
     'src/controllers/nodeController.ts',
-    'src/controllers/marketController.ts',
+    'src/controllers/appController.ts',
     'src/controllers/devController.ts',
 ];
 

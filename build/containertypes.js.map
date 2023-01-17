@@ -1,1 +1,0 @@
-{"version":3,"file":"containertypes.js","sourceRoot":"","sources":["../src/containertypes.ts"],"names":[],"mappings":";;;AAAa,QAAA,cAAc,GAAG;IAC1B,UAAU,EAAE,YAAY;IACxB,YAAY,EAAE,cAAc;IAC5B,GAAG,EAAE,KAAK;IACV,UAAU,EAAE,YAAY;IACxB,mBAAmB,EAAE,qBAAqB;IAC1C,mBAAmB,EAAE,qBAAqB;IAC1C,aAAa,EAAE,eAAe;IAC9B,yBAAyB,EAAE,2BAA2B;CACzD,CAAC"}
