@@ -229,6 +229,28 @@
         }
       }
     },
+    "/api/v1/app/getTop/{period}": {
+      "get": {
+        "tags": [
+          "APP"
+        ],
+        "description": "Query the tag numbers of (active) markets",
+        "parameters": [
+          {
+            "name": "period",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The period type. Supported values: 7 days 30 days, 90 days, 1 year"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/v1/dev/npm-downloads/{name}/{period}": {
       "get": {
         "tags": [

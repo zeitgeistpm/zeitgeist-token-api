@@ -2,13 +2,9 @@ import axios from 'axios';
 import { inject, injectable } from 'inversify';
 import { IApiFactory } from '../client/apiFactory';
 import { ContainerTypes } from '../containertypes';
-import { networks } from '../const';
 import { getDateYyyyMmDd, getDiffs, getSubscanOption } from '../utils';
-import { TransactionsWithoutLabel, tx, user, UsersWithDiffs } from '../models/tokenStats';
-
-export type PeriodType = '7 days' | '30 days' | '90 days' | '1 year';
-export type Pair = { date: number; value: number };
-export type DateRange = { start: Date; end: Date };
+import { DateRange, Pair, PeriodType, TransactionsWithoutLabel, tx, user, UsersWithDiffs } from '../models/tokenStats';
+import { DEFAULT_RANGE_LENGTH_DAYS, networks } from '../const';
 
 export interface IStatsIndexerService {
     getValidTransactions(period: PeriodType): Promise<Pair[]>;
@@ -19,14 +15,10 @@ export interface IStatsIndexerService {
 
     getTransactionCount(): Promise<number>;
 
-    getPrice(period: PeriodType): Promise<Pair[]>;
-
     getHolders(): Promise<number>;
 
     getDecimal(): Promise<number>;
 }
-
-const DEFAULT_RANGE_LENGTH_DAYS = 7;
 
 @injectable()
 /**
@@ -204,21 +196,6 @@ export class StatsIndexerService implements IStatsIndexerService {
             throw new Error(
                 'Unable to fetch number of total transfers. Most likely there is an error fetching data from Subscan API.',
             );
-        }
-    }
-
-    public async getPrice(period: PeriodType): Promise<Pair[]> {
-        const numberOfDays = this.getPeriodDurationInDays(period);
-
-        try {
-            const interval = period === '1 year' ? 'daily' : 'hourly';
-            const result = await axios.get(
-                `https://api.coingecko.com/api/v3/coins/zeitgeist/market_chart?vs_currency=usd&days=${numberOfDays}&interval=${interval}`,
-            );
-            return result.data.prices;
-        } catch (e) {
-            console.error(e);
-            return [];
         }
     }
 

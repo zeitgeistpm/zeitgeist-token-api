@@ -1,8 +1,9 @@
 import express, { Request, Response } from 'express';
 import { injectable, inject } from 'inversify';
 import { ContainerTypes } from '../containertypes';
+import { PeriodType } from '../models/tokenStats';
 import { IPriceProvider } from '../services/iPriceProvider';
-import { IStatsIndexerService, PeriodType } from '../services/statsIndexer';
+import { IStatsIndexerService } from '../services/statsIndexer';
 import { IStatsService } from '../services/tokenStats';
 import { ControllerBase } from './controllerBase';
 import { IControllerBase } from './iControllerBase';
@@ -71,7 +72,7 @@ export class TokenStatsController extends ControllerBase implements IControllerB
                 #swagger.description = 'Get token price in a specific period'
                 #swagger.tags = ['Token']
             */
-            res.json(await this._indexerService.getPrice(req.params.period as PeriodType));
+            res.json(await this._priceProvider.getPrice(req.params.period as PeriodType));
         });
 
         /**
