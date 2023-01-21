@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import { injectable, inject } from 'inversify';
 import { ContainerTypes } from '../containertypes';
+import { PeriodType } from '../models/tokenStats';
 import { IAPPIndexerService } from '../services/appIndexer';
 import { IControllerBase } from './iControllerBase';
 
@@ -44,6 +45,19 @@ export class APPController implements IControllerBase {
                 active = true;
             }
             res.json(await this._indexerService.getTagLists(active));
+        });
+
+        app.route('/api/v1/app/getTop/:period').get(async (req: Request, res: Response) => {
+            /*
+                #swagger.description = 'Query the tag numbers of (active) markets'
+                #swagger.tags = ['APP']
+                #swagger.parameters['period'] = {
+                    in: 'path',
+                    description: 'The period type.  Supported values: 7 days 30 days, 90 days, 1 year',
+                    required: true,
+                }
+            */
+            res.json(await this._indexerService.getTop(req.params.period as PeriodType));
         });
     }
 }

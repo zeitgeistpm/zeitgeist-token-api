@@ -1,3 +1,7 @@
+export type PeriodType = '7 days' | '30 days' | '90 days' | '1 year';
+export type Pair = { date: number; value: number };
+export type DateRange = { start: Date; end: Date };
+
 export class TokenStats {
     price: number;
     price_change: number;

@@ -26,3 +26,5 @@ export const networks = {
         graphqlUrl: 'https://processor.zeitgeist.pm/graphql',
     },
 };
+
+export const DEFAULT_RANGE_LENGTH_DAYS = 7;
