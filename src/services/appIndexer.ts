@@ -11,7 +11,7 @@ export interface IAPPIndexerService {
     getMarketCount(): Promise<number>;
     getActiveMarketCount(): Promise<number>;
     getTagLists(active: boolean): Promise<MarketsTags>;
-    getTop(period: PeriodType): Promise<Top[]>;
+    getTop(period: PeriodType, getNew: Boolean): Promise<Top[]>;
 }
 
 @injectable()
@@ -116,7 +116,7 @@ export class APPIndexerService implements IAPPIndexerService {
         }
     }
 
-    public async getTop(period: PeriodType): Promise<Top[]> {
+    public async getTop(period: PeriodType, getNew: Boolean): Promise<Top[]> {
         try {
             const d = period.includes('year') ? 365 : Number(period.substring(0, period.indexOf(' ')));
             const result = await axios.post(networks.zeitgeist.graphqlUrl, {
@@ -151,12 +151,18 @@ export class APPIndexerService implements IAPPIndexerService {
             for (const [index, pool] of poolArr.entries()) {
                 const poolId = pool.poolId;
                 if (index == 0 || poolId !== poolArr[index - 1].poolId) {
-                    res.push({
-                        poolId: poolId,
-                        Volume: Number(pool.dVolume),
-                        TransferTimes: 1,
-                        New: Boolean(await this.getNewOrNot(poolId, period)),
-                    });
+                    getNew
+                        ? res.push({
+                              poolId: poolId,
+                              Volume: Number(pool.dVolume),
+                              TransferTimes: 1,
+                              New: Boolean(await this.getNewOrNot(poolId, period)),
+                          })
+                        : res.push({
+                              poolId: poolId,
+                              Volume: Number(pool.dVolume),
+                              TransferTimes: 1,
+                          });
                 } else {
                     const poolIndex = res.findIndex((v) => v.poolId === poolId);
                     res[poolIndex].TransferTimes++;

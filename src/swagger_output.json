@@ -229,7 +229,7 @@
         }
       }
     },
-    "/api/v1/app/getTop/{period}": {
+    "/api/v1/app/getTop/{period}/getNew/{getNew}": {
       "get": {
         "tags": [
           "APP"
@@ -242,6 +242,13 @@
             "required": true,
             "type": "string",
             "description": "The period type. Supported values: 7 days 30 days, 90 days, 1 year"
+          },
+          {
+            "name": "getNew",
+            "in": "path",
+            "required": true,
+            "type": "boolean",
+            "description": "The boolean type. true or false. "
           }
         ],
         "responses": {

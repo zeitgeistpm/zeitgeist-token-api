@@ -47,7 +47,7 @@ export class APPController implements IControllerBase {
             res.json(await this._indexerService.getTagLists(active));
         });
 
-        app.route('/api/v1/app/getTop/:period').get(async (req: Request, res: Response) => {
+        app.route('/api/v1/app/getTop/:period/getNew/:getNew').get(async (req: Request, res: Response) => {
             /*
                 #swagger.description = 'Query the tag numbers of (active) markets'
                 #swagger.tags = ['APP']
@@ -56,8 +56,18 @@ export class APPController implements IControllerBase {
                     description: 'The period type.  Supported values: 7 days 30 days, 90 days, 1 year',
                     required: true,
                 }
+                #swagger.parameters['getNew'] = {
+                    in: 'path',
+                    type: 'boolean',
+                    description: 'The boolean type.  true or false. ',
+                    required: true,
+                }
             */
-            res.json(await this._indexerService.getTop(req.params.period as PeriodType));
+            var getNew = false;
+            if (req.params.getNew == 'True' || req.params.getNew == 'true') {
+                getNew = true;
+            }
+            res.json(await this._indexerService.getTop(req.params.period as PeriodType, getNew));
         });
     }
 }

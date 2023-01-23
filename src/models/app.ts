@@ -5,5 +5,5 @@ export interface Top {
     poolId: Number;
     Volume: Number;
     TransferTimes: number;
-    New: boolean;
+    New?: boolean;
 }
